@@ -19,7 +19,7 @@ PERSISTENT_CONSTANTS = c("PERSISTENT_CONSTANTS")
 dataLocation = "input\\data\\train.csv"
 rawData = read.csv2(dataLocation, header=TRUE, encoding="ANSI", sep=",", strip.white=TRUE, na.strings=c(""))
 
-
+rm(list=c("dataLocation"))
 isGuessedAge = function (x) {
 
   return (x != floor(x))
@@ -44,3 +44,12 @@ rawData$guessedAge = isGuessedAge(rawData$age)
 rawData$guessedAge = as.factor(rawData$guessedAge)
 rawData$age = floor(rawData$age)
 
+# DROP COLUMNS
+dropColumns = c("ticket", "cabin")
+rawData = rawData[,!(names(rawData) %in% dropColumns)]
+
+data = rawData
+rm(list=c("dropColumns", "rawData"))
+
+
+save(data, file="output\\data\\train.RData")
