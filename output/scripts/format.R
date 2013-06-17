@@ -2,6 +2,10 @@
 # SETUP WORKSPACE
 
 library(e1071)
+# library(randomForest)
+# library(kernlab)
+
+
 set.seed(4711)
 
 # clean
@@ -51,5 +55,14 @@ rawData = rawData[,!(names(rawData) %in% dropColumns)]
 data = rawData
 rm(list=c("dropColumns", "rawData"))
 
+
+# guess missing ages
+# takenIndex = is.na(data$guessedAge)
+# agePredictionModel = ksvm(guessedAge ~ ., data=data[FALSE == takenIndex, ],kernel="rbfdot", 
+#                           kpar=list(sigma=0.015), C=70, cross=4, prob.model=TRUE)
+# agePredictionModel = svm(guessedAge ~ ., data=data[FALSE == takenIndex,])
+# agesPredicted = predict(agePredictionModel, newdata=data[FALSE == takenIndex,])
+
+# table(observed = data[FALSE == takenIndex, "survived"], predicted = c(agesPredicted, NA, NA))
 
 save(data, file="output\\data\\train.RData")
