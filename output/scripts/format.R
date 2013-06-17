@@ -58,13 +58,20 @@ rm(list=c("dropColumns", "rawData"))
 
 # guess missing ages
 # takenIndex = is.na(data$guessedAge)
+<<<<<<< HEAD
 # agePredictionModel = ksvm(guessedAge ~ ., data=data[FALSE == takenIndex, ], kernel="rbfdot", 
+=======
+# agePredictionModel = ksvm(guessedAge ~ ., data=data[FALSE == takenIndex, ],kernel="rbfdot", 
+>>>>>>> b4cd3bc897dd80bcc88e3a4d72a79f2a2bd537d1
 #                           kpar=list(sigma=0.015), C=70, cross=4, prob.model=TRUE)
 # agePredictionModel = svm(guessedAge ~ ., data=data[FALSE == takenIndex,])
 # agesPredicted = predict(agePredictionModel, newdata=data[FALSE == takenIndex,])
 
 # table(observed = data[FALSE == takenIndex, "survived"], predicted = c(agesPredicted, NA, NA))
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b4cd3bc897dd80bcc88e3a4d72a79f2a2bd537d1
 save(data, file="output\\data\\train.RData")
 write.table(data, file="output\\data\\train.csv", sep=",")
