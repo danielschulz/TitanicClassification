@@ -2,8 +2,8 @@
 # SETUP WORKSPACE
 
 library(e1071)
-library(Amelia)
-require(Amelia)
+library(randomForest)
+library(kernlab)
 
 set.seed(4711)
 
@@ -22,17 +22,29 @@ PERSISTENT_CONSTANTS = c("PERSISTENT_CONSTANTS")
 dataLocation = "output\\data\\train.RData"
 a = load(dataLocation)
 
+
 # load test data: test
 dataLocation = "output\\data\\test.RData"
 b = load(dataLocation)
 
 
-rm(list=c("a", "b", "dataLocation"))
+names = names(test)
+test$survived = "0"
+test = test[c("survived", names)]
+
+rm(list=c("a", "b", "dataLocation", "names"))
+
+# x = lapply(data$survived, FUN= function (x) {return (x == "1")})
+# data$survived = FALSE
+# data$survived = as.factor(data$survived)
+# data$survived = c(x)
+
 
 # svm classification
-formula = data$survived ~ .
-svm = svm(formula, data = data, decision.values = train, type="C-classification", probability=TRUE)
+formula = survived ~ .
+svm = ksvm(formula, data = data.frame(data), kernel="rbfdot", kpar=list(sigma=0.015), C=70, cross=4, prob.model=TRUE)
 
-test$survived = FALSE
-pr = predict(svm, newdata = test, probability=TRUE, decision.values=TRUE)
+
+pr = predict(svm, newdata = test)
+
 
