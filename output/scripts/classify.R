@@ -2,6 +2,9 @@
 # SETUP WORKSPACE
 
 library(e1071)
+library(Amelia)
+require(Amelia)
+
 set.seed(4711)
 
 # clean
@@ -24,12 +27,12 @@ dataLocation = "output\\data\\test.RData"
 b = load(dataLocation)
 
 
-
-rm(list = c("a", "b", "dataLocation"))
-
+rm(list=c("a", "b", "dataLocation"))
 
 # svm classification
 formula = data$survived ~ .
 svm = svm(formula, data = data, decision.values = train, type="C-classification", probability=TRUE)
+
+test$survived = FALSE
 pr = predict(svm, newdata = test, probability=TRUE, decision.values=TRUE)
 
